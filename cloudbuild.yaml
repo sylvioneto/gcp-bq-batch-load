@@ -1,0 +1,46 @@
+steps:
+- id: 'zip code'
+  name: 'ubuntu'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+    apt-get update; apt install zip -y
+    zip /workspace/function-source.zip main.py requirements.txt
+  dir: load_function
+
+- id: 'tf init'
+  name: 'hashicorp/terraform:1.0.0'
+  entrypoint: 'sh'
+  args: 
+  - '-c'
+  - | 
+    terraform init \
+    -backend-config="bucket=$PROJECT_ID-tf-state" \
+    -backend-config="prefix=batch-load"
+  dir: terraform
+      
+- id: 'tf plan'
+  name: 'hashicorp/terraform:1.0.0'
+  args: 
+  - plan
+  dir: terraform
+
+- id: 'tf apply'
+  name: 'hashicorp/terraform:1.0.0'
+  args: 
+  - apply
+  - -auto-approve
+  dir: terraform
+
+options:
+  env:
+    - TF_VAR_project_id=$PROJECT_ID
+    - REGION=southamerica-east1
+
+tags:
+  - terraform
+  - batch-load
+  - plan-apply
+
+
