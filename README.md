@@ -67,6 +67,9 @@ Upload the sample data csv to your upload bucket, for example.
 ```
 gsutil cp sample_data/order_events_001.csv gs://your-upload-bucket/ecommerce/order_events/
 ```
+Then, go to BigQuery and check if the data has been loaded.
+In case of problems, check Cloud Functions log.
+
 
 
 ## Destroy
