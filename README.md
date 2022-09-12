@@ -5,11 +5,11 @@
 This example demonstrates how to batch load csv files upload to GCS directly to BigQuery and archive them for long-term purposes.
 
 ### Use case
-Upload the data into the upload bucket following the pattern:
-`gs://your-upload-bucket/dataset-name/table-name/file.csv`
+Upload the data into the upload bucket following the pattern `gs://your-upload-bucket/dataset-name/table-name/file.csv`.
 
-The function will extract the parameters from the object path and then load the file into the table.
+This upload will trigger a Cloud Function that extracts the parameters from the object path and then load the file into the table.
 
+![diagram](diagram.png)
 
 Resources created:
 - BigQuery data sets and tables
